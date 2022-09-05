@@ -24,12 +24,8 @@ jobs:
         # Set the output named "docs_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
 
-    - shell: pwsh
-      # steps.<step_id>.outputs.<output name>
-      run: |
-        echo $steps.check_file_changed.outputs.files_changed
-      
-    - shell: pwsh
-      # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed['src/change2.yml']
-      run: echo 'Mudança no arquivo change2.yml'
+    - uses: actions/github-script@v6
+      with:
+        script: |
+          const files_changed = steps.check_file_changed.outputs.files_changed
+          console.log(files_changed)
