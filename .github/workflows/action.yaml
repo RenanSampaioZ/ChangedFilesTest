@@ -23,6 +23,7 @@ jobs:
 
         echo $SourceDiff(0)
         echo $SourceDiff(1)
+        echo $SourceDiff(2)
 
         # Set the output named "files_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
