@@ -20,7 +20,7 @@ jobs:
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match '.github/workflows/action.yaml' -or $_ -match 'src/change2.yml' }
-        echo $SourceDiff.github/workflows/action.yaml
+        echo $SourceDiff..github/workflows/action.yaml
         $HasDiff = $SourceDiff.Length -gt 0
 
         # Set the output named "docs_changed"
