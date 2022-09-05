@@ -20,7 +20,7 @@ jobs:
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match 'src/change1.yml' -or $_ -match 'src/change2.yml' }
-        echo $SourceDiff
+        echo $SourceDiff.GetType().Name
         $HasDiff = $SourceDiff.Length -gt 0
 
         # Set the output named "docs_changed"
