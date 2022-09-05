@@ -21,7 +21,7 @@ jobs:
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match 'src/change1.yml' -or $_ -match 'src/change2.yml' }
 
-        echo $SourceDiff[1]
+        echo $SourceDiff.'scr/change1.yml'
 
         # Set the output named "files_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
@@ -29,7 +29,7 @@ jobs:
     # Run the step only with "docs_changed" equals "True"
     - shell: pwsh
       # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed[0] == 'src/change1.yml'
+      if: steps.check_file_changed.outputs.files_changed.'src/change1.yml' == 'src/change1.yml'
       run: echo 'Changes 1'
     # Run the step only with "docs_changed" equals "True"
     - shell: pwsh
