@@ -27,5 +27,5 @@ jobs:
     - uses: actions/github-script@v6
       with:
         script: |
-          const files_changed = steps.check_file_changed.outputs.files_changed
+          const files_changed = {{ steps.check_file_changed.outputs.files_changed }}
           console.log(files_changed)
