@@ -17,16 +17,14 @@ jobs:
       run: |
         # Diff HEAD with the previous commit
         $diff = git diff --name-only HEAD^ HEAD
+        
+        $change1 = 'src/change1.yml'
+        $change2 = 'src/change2.yml'
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-        $SourceDiff = $diff | Where-Object { $_ -match 'src/change1.yml' -or $_ -match 'src/change2.yml' }
+        $SourceDiff = $diff | Where-Object { $_ -match $change1 -or $_ -match $change2 }
+        
+        echo $SourceDiff[1]
 
         # Set the output named "docs_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
-
-    - uses: actions/github-script@v6
-      with:
-        script: |
-          const files_changed = ${{ steps.check_file_changed.outputs.files_changed }}
-          console.log('change1', files_changed.src/change1.yml)
-          console.log('change2', files_changed.src/change2.yml)
