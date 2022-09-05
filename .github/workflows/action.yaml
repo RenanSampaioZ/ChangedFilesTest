@@ -21,8 +21,8 @@ jobs:
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match '^src/change1.yml' -or $_ -match '^src/change2.yml' }
 
-        echo $SourceDiff('src/change1.yml')
-        echo $SourceDiff('src/change2.yml')
+        echo $SourceDiff('change1.yml')
+        echo $SourceDiff('change2.yml')
 
         # Set the output named "files_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
