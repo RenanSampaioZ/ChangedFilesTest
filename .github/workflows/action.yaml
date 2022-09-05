@@ -22,7 +22,7 @@ jobs:
         $diff = git diff --name-only HEAD^ HEAD
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-        $SourceDiff = $diff | Where-Object { $_ -match '${{ env.CHANGE1 }}' -or $_ -match '${{ env.CHANGE2 }}' }
+        $SourceDiff = $diff | Where-Object { $_ -match "${{ env.CHANGE1 }}" -or $_ -match "${{ env.CHANGE2 }}" }
 
         echo $SourceDiff[0]
         echo $SourceDiff[1]
@@ -33,10 +33,10 @@ jobs:
     # Run the step only with "docs_changed" equals "True"
     - shell: pwsh
       # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed[0] == ${{ env.CHANGE1 }}
+      if: steps.check_file_changed.outputs.files_changed[0] == "${{ env.CHANGE1 }}"
       run: echo 'Changes 1'
     # Run the step only with "docs_changed" equals "True"
     - shell: pwsh
       # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed[1] == ${{ env.CHANGE2 }}
+      if: steps.check_file_changed.outputs.files_changed[1] == "${{ env.CHANGE2 }}"
       run: echo 'Changes 2'
