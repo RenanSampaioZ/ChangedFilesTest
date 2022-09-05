@@ -24,6 +24,9 @@ jobs:
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match '${{ env.CHANGE1 }}' -or $_ -match '${{ env.CHANGE2 }}' }
 
+        echo $SourceDiff[0]
+        echo $SourceDiff[1]
+
         # Set the output named "files_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
         
