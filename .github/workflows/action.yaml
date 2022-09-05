@@ -26,10 +26,10 @@ jobs:
 
     - shell: pwsh
       # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed == 'src/change1.yml'
+      if: steps.check_file_changed.outputs.files_changed.src/change1.yml
       run: echo 'Mudança no arquivo change1.yml'
       
     - shell: pwsh
       # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed == 'src/change2.yml'
+      if: steps.check_file_changed.outputs.files_changed.src/change2.yml
       run: echo 'Mudança no arquivo change2.yml'
