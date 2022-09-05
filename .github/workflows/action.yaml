@@ -1,0 +1,19 @@
+name: GitHub Action
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  create-github-release:
+    name: Create Github Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create Release Notes        
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('.github/script.js')
+            await script({github, context})
