@@ -19,10 +19,10 @@ jobs:
         $diff = git diff --name-only HEAD^ HEAD
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-        $SourceDiff = $diff | Where-Object { $_ -match 'src/change1.yml' -or $_ -match 'src/change2.yml' }
+        $SourceDiff1 = $diff | Where-Object { $_ -match '^src/change1.yml' -or $_ -match '^src/change2.yml' }
 
-        echo $SourceDiff.scr/change1.yml
-        echo $SourceDiff.scr/change2.yml
+        echo $SourceDiff
+
         # Set the output named "files_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
         
