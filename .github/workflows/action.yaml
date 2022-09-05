@@ -21,7 +21,7 @@ jobs:
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
         $SourceDiff = $diff | Where-Object { $_ -match '^src/change1.yml' -or $_ -match '^src/change2.yml' }
 
-        for i in SourceDiff; do
+        for( i in SourceDiff); do
           echo "file: $i"
         done
 
