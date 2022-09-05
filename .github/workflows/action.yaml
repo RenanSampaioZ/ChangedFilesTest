@@ -5,6 +5,9 @@ on:
     branches: hmg
 jobs:
   conditional_step:
+    env:
+      CHANGE1: 'src/change1.yml'
+      CHANGE2: 'src/change2.yml'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -17,14 +20,20 @@ jobs:
       run: |
         # Diff HEAD with the previous commit
         $diff = git diff --name-only HEAD^ HEAD
-        
-        $change1 = 'src/change1.yml'
-        $change2 = 'src/change2.yml'
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-        $SourceDiff = $diff | Where-Object { $_ -match $change1 -or $_ -match $change2 }
-        
-        echo $SourceDiff[1]
+        $SourceDiff = $diff | Where-Object { $_ -match ${{ env.CHANGE1 }} -or $_ -match ${{ env.CHANGE2 }} }
 
-        # Set the output named "docs_changed"
+        # Set the output named "files_changed"
         Write-Host "::set-output name=files_changed::$SourceDiff"
+        
+    # Run the step only with "docs_changed" equals "True"
+    - shell: pwsh
+      # steps.<step_id>.outputs.<output name>
+      if: steps.check_file_changed.outputs.files_changed[0] == ${{ env.CHANGE1 }}
+      run: echo 'Changes 1'
+    # Run the step only with "docs_changed" equals "True"
+    - shell: pwsh
+      # steps.<step_id>.outputs.<output name>
+      if: steps.check_file_changed.outputs.files_changed[1] == ${{ env.CHANGE2 }}
+      run: echo 'Changes 2'
