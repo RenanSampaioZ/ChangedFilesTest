@@ -19,22 +19,20 @@ jobs:
         $diff = git diff --name-only HEAD^ HEAD
 
         # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-        $SourceDiff = $diff | Where-Object { $_ -match '^src/change1.yml' -or $_ -match '^src/change2.yml' }
-
-        for(var i in SourceDiff) {        
-          echo "file: $i"
-        }
+        $SourceDiff1 = $diff | Where-Object { $_ -match '^src/change1.yml' }
+        $SourceDiff2 = $diff | Where-Object { $_ -match '^src/change2.yml' }
 
         # Set the output named "files_changed"
-        Write-Host "::set-output name=files_changed::$SourceDiff"
+        Write-Host "::set-output name=files_changed1::$SourceDiff1"
+        Write-Host "::set-output name=files_changed2::$SourceDiff2"
         
-    # # Run the step only with "docs_changed" equals "True"
-    # - shell: pwsh
-    #   # steps.<step_id>.outputs.<output name>
-    #   if: steps.check_file_changed.outputs.files_changed.includes('src/change1.yml')
-    #   run: echo 'Changes 1'
-    # # Run the step only with "docs_changed" equals "True"
-    # - shell: pwsh
-    #   # steps.<step_id>.outputs.<output name>
-    #   if: steps.check_file_changed.outputs.files_changed.includes('src/change2.yml')
-    #   run: echo 'Changes 2'
+    # Run the step only with "docs_changed" equals "True"
+    - shell: pwsh
+      # steps.<step_id>.outputs.<output name>
+      if: steps.check_file_changed.outputs.files_changed1 == 'src/change1.yml'
+      run: echo 'Changes 1'
+    # Run the step only with "docs_changed" equals "True"
+    - shell: pwsh
+      # steps.<step_id>.outputs.<output name>
+      if: steps.check_file_changed.outputs.files_changed2 == 'src/change2.yml'
+      run: echo 'Changes 2'
