@@ -11,19 +11,24 @@ jobs:
       with:
         # Checkout as many commits as needed for the diff
         fetch-depth: 2
-    - name: Run a sh script from a file
-      # Give an id to the step, so we can reference it later
-      id: check_file_changed
-      run: sh .github/changed-files.sh
-      shell: pwsh
-        
-    # Run the step only with "docs_changed" equals "True"
-    - shell: pwsh
-      # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed1 == 'src/change1.yml'
-      run: echo 'Changes 1'
-    # Run the step only with "docs_changed" equals "True"
-    - shell: pwsh
-      # steps.<step_id>.outputs.<output name>
-      if: steps.check_file_changed.outputs.files_changed2 == 'src/change2.yml'
-      run: echo 'Changes 2'
+      - name: Checking if Deployment and Servico-Deployment Files have changed
+        # Give an id to the step, so we can reference it later
+        id: check_file_changed
+        run: |
+          # Diff HEAD with the previous commit
+          $diff = git diff --name-only HEAD^ HEAD
+          # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
+          $SourceDiffDeployment = $diff | Where-Object { $_ -match '^src/deployment.yaml' }
+          $SourceDiffServicoDeployment = $diff | Where-Object { $_ -match '^src/servico-deployment.yaml' }
+          # Set the output
+          echo "deployment=$SourceDiffDeployment" >> $GITHUB_OUTPUT
+          echo "servicodeployment=$SourceDiffServicoDeployment" >> $GITHUB_OUTPUT
+        shell: pwsh
+
+      - name: Azure Kubernetes Service - Deployment de Web App
+        run: |
+          if ${{ steps.check_file_changed.outputs.deployment == 'src/deployment.yaml' }}  || ${{ steps.check_file_changed.outputs.servicodeployment == 'src/servico-deployment.yaml' }}; then
+            echo "Arquivos mudaram";
+          else
+            echo "Arquivos não mudaram";
+          fi
