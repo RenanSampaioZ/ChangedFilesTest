@@ -24,18 +24,13 @@ jobs:
           "deployment=$SourceDiffDeployment" >> $env:GITHUB_OUTPUT
           "servicodeployment=$SourceDiffServicoDeployment" >> $env:GITHUB_OUTPUT
         shell: pwsh
-
+        
       - name: Azure Kubernetes Service - Deployment de Web App
         run: |
-          echo "${{ steps.check_file_changed.outputs.deployment }}"
-          echo "${{ steps.check_file_changed.outputs.servicodeployment }}"
-
-      # - name: Azure Kubernetes Service - Deployment de Web App
-      #   run: |
-      #     echo ${{ steps.check_file_changed.outputs.deployment }}
-      #     echo ${{ steps.check_file_changed.outputs.deployment }}
-      #     if ${{ steps.check_file_changed.outputs.deployment == 'src/deployment.yaml' }}  || ${{ steps.check_file_changed.outputs.servicodeployment == 'src/servico-deployment.yaml' }}; then
-      #       echo "Arquivos mudaram";
-      #     else
-      #       echo "Arquivos não mudaram";
-      #     fi
+          echo ${{ steps.check_file_changed.outputs.deployment }}
+          echo ${{ steps.check_file_changed.outputs.deployment }}
+          if ${{ steps.check_file_changed.outputs.deployment == 'src/deployment.yaml' }}  || ${{ steps.check_file_changed.outputs.servicodeployment == 'src/servico-deployment.yaml' }}; then
+            echo "Arquivos mudaram";
+          else
+            echo "Arquivos não mudaram";
+          fi
