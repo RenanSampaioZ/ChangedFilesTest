@@ -27,8 +27,15 @@ jobs:
 
       - name: Azure Kubernetes Service - Deployment de Web App
         run: |
-          if ${{ steps.check_file_changed.outputs.deployment == 'src/deployment.yaml' }}  || ${{ steps.check_file_changed.outputs.servicodeployment == 'src/servico-deployment.yaml' }}; then
-            echo "Arquivos mudaram";
-          else
-            echo "Arquivos não mudaram";
-          fi
+          echo ${{ steps.check_file_changed.outputs.deployment }}
+          echo ${{ steps.check_file_changed.outputs.deployment }}
+
+      # - name: Azure Kubernetes Service - Deployment de Web App
+      #   run: |
+      #     echo ${{ steps.check_file_changed.outputs.deployment }}
+      #     echo ${{ steps.check_file_changed.outputs.deployment }}
+      #     if ${{ steps.check_file_changed.outputs.deployment == 'src/deployment.yaml' }}  || ${{ steps.check_file_changed.outputs.servicodeployment == 'src/servico-deployment.yaml' }}; then
+      #       echo "Arquivos mudaram";
+      #     else
+      #       echo "Arquivos não mudaram";
+      #     fi
