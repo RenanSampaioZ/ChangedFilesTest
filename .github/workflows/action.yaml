@@ -28,7 +28,7 @@ jobs:
       - name: Azure Kubernetes Service - Deployment de Web App
         run: |
           echo ${{ steps.check_file_changed.outputs.deployment }}
-          echo ${{ steps.check_file_changed.outputs.deployment }}
+          echo ${{ steps.check_file_changed.outputs.servicodeployment }}
 
       # - name: Azure Kubernetes Service - Deployment de Web App
       #   run: |
