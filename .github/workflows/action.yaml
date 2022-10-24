@@ -24,7 +24,7 @@ jobs:
           "deployment=$SourceDiffDeployment" >> $env:GITHUB_OUTPUT
           "servicodeployment=$SourceDiffServicoDeployment" >> $env:GITHUB_OUTPUT
         shell: pwsh
-        
+
       - name: Azure Kubernetes Service - Deployment de Web App
         run: |
           echo ${{ steps.check_file_changed.outputs.deployment }}
@@ -34,3 +34,4 @@ jobs:
           else
             echo "Arquivos não mudaram";
           fi
+
