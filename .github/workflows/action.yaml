@@ -7,10 +7,10 @@ jobs:
   conditional_step:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      with:
-        # Checkout as many commits as needed for the diff
-        fetch-depth: 2
+      - uses: actions/checkout@v3
+        with:
+          # Checkout as many commits as needed for the diff
+          fetch-depth: 2
       - name: Checking if Deployment and Servico-Deployment Files have changed
         # Give an id to the step, so we can reference it later
         id: check_file_changed
