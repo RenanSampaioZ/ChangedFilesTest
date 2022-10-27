@@ -20,6 +20,7 @@ jobs:
           filename="src/deployment.yaml"
           # Take the replace string
           read -p "Enter the replace string: " replace          
-          sed -i "s/latest/$replace/" $filename
-
+          if [[ $replace != "" ]]; then
+          sed -i "s/latest/$replace/gi" $filename
+          fi
           cat $filename
