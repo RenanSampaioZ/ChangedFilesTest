@@ -21,6 +21,6 @@ jobs:
           # Take the replace string
           read -p "Enter the replace string: " replace          
           if [[ $replace != "" ]]; then
-          sed -i "s/latest/$replace/gi" $filename
+          sed -i "s/latest/$replace/gi" $1
           fi
           cat $filename
