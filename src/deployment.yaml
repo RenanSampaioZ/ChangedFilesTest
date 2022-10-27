@@ -1,1 +1,85 @@
-Ola Mundo dssa 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indigo-boletagem-api-rollback-k8s
+  labels:
+    app: indigo-boletagem-api-rollback-k8s
+spec:
+  progressDeadlineSeconds: 60
+  revisionHistoryLimit: 0
+  replicas: 3
+  selector:
+    matchLabels:
+      app: indigo-boletagem-api-rollback-k8s
+  template:
+    metadata:
+      labels:
+        app: indigo-boletagem-api-rollback-k8s
+    spec:
+      containers:
+        - name: indigo-boletagem-api-rollback-k8s
+          image: evlosregistry.azurecr.io/indigo/indigo-boletagem-api-rollback-k8s:latest
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            periodSeconds: 3
+            timeoutSeconds: 30
+          # env:
+            # - name: "ConnectionString__SecurityDataContext"
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: env-vars
+            #       key: connstr
+          #   - name: "ConnectionString__ConexaoRedis"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: conexaoredis
+          #   - name: "ConnectionString__TicketsDataContext"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: connstr
+          #   - name: "ConnectionString__WorkflowDataContext"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: connstr
+          #   - name: "ConnectionString__FilesDataContext"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: connstr
+          #   - name: "ConnectionString__CutoffDataContext"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: connstr
+          #   - name: "ConnectionString__ReceivableDataContext"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: connstr
+          #   - name: "Azure__StorageSettings__BlobContainer"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: azureblobcontainer
+          #   - name: "Azure__StorageSettings__AccountName"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: azureaccountname
+          #   - name: "Azure__StorageSettings__AccountKey"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: azureaccountkey
+          #   - name: "MinicomSettings__TransferTokenKey"
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: env-vars
+          #         key: transfertokenkey

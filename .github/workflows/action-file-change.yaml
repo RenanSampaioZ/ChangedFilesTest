@@ -1,0 +1,24 @@
+name: GitHub Action
+
+on: 
+  push:
+    branches: develop
+jobs:
+  conditional_step:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Checkout as many commits as needed for the diff
+          fetch-depth: 2
+
+      - name: Azure Kubernetes Service - Deployment de Web App
+        run: |
+          #!/bin/bash
+
+          # Assign the filename
+          filename="src/deployment.yaml"
+          
+          sed -i "s/latest/$GITHUB_RUN_NUMBER/" $filename
+
+          cat filename
