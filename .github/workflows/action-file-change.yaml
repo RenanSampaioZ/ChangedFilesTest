@@ -18,7 +18,8 @@ jobs:
 
           # Assign the filename
           filename="src/deployment.yaml"
-          
-          sed -i "s/latest/$GITHUB_RUN_NUMBER/" $filename
+          # Take the replace string
+          read -p "Enter the replace string: " replace          
+          sed -i "s/latest/$replace/" $filename
 
           cat $filename
